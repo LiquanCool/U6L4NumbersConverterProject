@@ -57,6 +57,7 @@ public class NumberConverter {
     public int[] convertToBinary()
     {
         int temp = number;
+
         int counter = 0;
         int remainder = 0;
         if (base== 10)
