@@ -50,6 +50,7 @@ public class NumberConverter {
             tempNum += Integer.parseInt(numStr.substring(i,i+1))*tempBase;
             tempBase*= base;
         }
+
         return null;
     }
 
