@@ -50,14 +50,18 @@ public class NumberConverter {
             tempNum += Integer.parseInt(numStr.substring(i,i+1))*tempBase;
             tempBase*= base;
         }
-
-        return null;
+        String strNum = Integer.toString(tempNum);
+        int[] tempArray = new int[strNum.length()];
+        for (int i = 0;i < strNum.length();i++)
+        {
+            tempArray[i] = Integer.parseInt(strNum.substring(i,i+1));
+        }
+        return tempArray;
     }
 
     public int[] convertToBinary()
     {
         int temp = number;
-
         int counter = 0;
         int remainder = 0;
         if (base== 10)
