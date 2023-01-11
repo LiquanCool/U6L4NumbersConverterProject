@@ -44,17 +44,17 @@ public class NumberConverter {
     public int[] convertToDecimal() {
         String numStr = Integer.toString(number);
         int tempNum = 0;
-        int tempBase = base;
-        for (int i = 0;i < numStr.length();i++)
+        int tempBase = 1;
+        for (int i = numStr.length()-1;i >= 0;i--)
         {
             tempNum += Integer.parseInt(numStr.substring(i,i+1))*tempBase;
             tempBase*= base;
         }
-        String strNum = Integer.toString(tempNum);
-        int[] tempArray = new int[strNum.length()];
-        for (int i = 0;i < strNum.length();i++)
+        numStr = Integer.toString(tempNum);
+        int[] tempArray = new int[numStr.length()];
+        for (int i = 0;i < numStr.length();i++)
         {
-            tempArray[i] = Integer.parseInt(strNum.substring(i,i+1));
+            tempArray[i] = Integer.parseInt(numStr.substring(i,i+1));
         }
         return tempArray;
     }
@@ -87,7 +87,31 @@ public class NumberConverter {
         return null;
     }
 
-    public int[] convertToOctal() {
+    public int[] convertToOctal()
+    {
+        int temp = number;
+        int counter = 0;
+        int remainder = 0;
+        if (base== 10)
+        {
+            while (temp > 0)
+            {
+                remainder = temp%8;
+                counter++;
+                temp = temp/8;
+            }
+            int[] tempArray = new int[counter];
+            temp = number;
+            counter--;
+            while (temp > 0)
+            {
+                remainder = temp%8;
+                tempArray[counter] = remainder;
+                temp = temp/8;
+                counter--;
+            }
+            return tempArray;
+        }
         return null;
     }
 }
