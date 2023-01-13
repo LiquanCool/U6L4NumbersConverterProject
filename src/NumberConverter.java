@@ -112,6 +112,55 @@ public class NumberConverter {
             }
             return tempArray;
         }
+        if (base== 2)
+        {
+            String numString = Integer.toString(number);
+            if (numString.length()%3==0)
+            {
+                counter = numString.length()/3;
+            }
+            else
+            {
+                counter = numString.length()/3+1;
+            }
+            int[] tempArray = new int[counter];
+            counter = 0;
+            int counter2 = 0;
+            int temp2 = 0;
+            String ans = "";
+            for (int i = numString.length()-1;i>=0;i--)
+            {
+                if (counter ==0)
+                {
+                    temp2 += Integer.parseInt(numString.substring(i,i+1));
+                    counter++;
+                    counter2++;
+                }
+                else if (counter ==1)
+                {
+                    temp2 += Integer.parseInt(numString.substring(i,i+1))*2;
+                    counter++;
+                    counter2++;
+                }
+                else if (counter ==2)
+                {
+                    temp2 += Integer.parseInt(numString.substring(i,i+1))*4;
+                    counter=0;
+                    counter2++;
+                }
+                if (counter2==3)
+                {
+                    ans = temp2 + ans;
+                    temp2 =0;
+                    counter2 = 0;
+                }
+            }
+            for (int i = 0;i<tempArray.length;i++)
+            {
+                tempArray[i]=Integer.parseInt(ans.substring(i,i+1));
+            }
+            return tempArray;
+        }
         return null;
     }
 }

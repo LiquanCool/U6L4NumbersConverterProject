@@ -24,12 +24,18 @@ class ConverterRunner {
         System.out.println("Number: " + nc.displayOriginalNumber());
         if (base == 10)
         {
-            System.out.println("\n\nBinary Number: " + Arrays.toString(nc.convertToBinary()));
-            System.out.println("\n\nOctal Number: " + Arrays.toString(nc.convertToOctal()));
+            System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
+            System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
         }
         if (base == 2)
         {
-            System.out.println("\n\nDecimal Number: " + Arrays.toString(nc.convertToDecimal()));
+            System.out.println("Decimal Number: " + Arrays.toString(nc.convertToDecimal()));
+            System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
+        }
+        if (base == 8)
+        {
+            System.out.println("Decimal Number: " + Arrays.toString(nc.convertToDecimal()));
+            System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
         }
 
     }
