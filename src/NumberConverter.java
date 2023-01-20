@@ -64,7 +64,7 @@ public class NumberConverter {
         int temp = number;
         int counter = 0;
         int remainder = 0;
-        if (base== 10)
+        if (base == 10)
         {
             while (temp > 0)
             {
@@ -81,6 +81,44 @@ public class NumberConverter {
                 tempArray[counter] = remainder;
                 temp = temp/2;
                 counter--;
+            }
+            return tempArray;
+        }
+        if (base == 8)
+        {
+            String numAsStr = Integer.toString(number);
+            String numStr = "";
+            String ans = "";
+            for (int i =0;i<numAsStr.length();i++)
+            {
+                numStr = "";
+                int oneNum = Integer.parseInt(numAsStr.substring(i,i+1));
+                System.out.println(oneNum);
+                while (oneNum > 0)
+                {
+                    remainder = oneNum%2;
+                    numStr = remainder+numStr;
+                    oneNum = oneNum/2;
+                }
+                if (numStr.length()==1)
+                {
+                    numStr="00"+numStr;
+                }
+                if (numStr.length()==2)
+                {
+                    numStr="0"+numStr;
+                }
+                System.out.println(numStr);
+                ans+=numStr;
+            }
+            while(ans.substring(0,1).equals("0"))
+            {
+                ans = ans.substring(1);
+            }
+            int[] tempArray = new int[ans.length()];
+            for (int i = 0;i<tempArray.length;i++)
+            {
+                tempArray[i]=Integer.parseInt(ans.substring(i,i+1));
             }
             return tempArray;
         }
