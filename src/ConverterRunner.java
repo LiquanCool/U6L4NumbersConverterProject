@@ -22,6 +22,8 @@ class ConverterRunner {
             if (!acceptable)
             {
                 System.out.println("That is not a acceptable number! Try again.");
+                System.out.print("Enter the base of your number (2, 8 or 10): ");
+                base = Integer.parseInt(s.nextLine());
             }
         }
         n = Integer.parseInt(number);
