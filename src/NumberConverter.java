@@ -14,19 +14,65 @@ public class NumberConverter {
         this.base = base;
         this.number = number;
     }
-    public boolean NumberChecker(int base)
+    public static boolean numberChecker(int base, String numStr)
     {
+        if (numStr.length()>10)
+        {
+                return false;
+        }
         if (base == 2)
         {
-            for (int i = 0; i < digits.length; i++)
+            for (int i = 0; i < numStr.length(); i++)
             {
-                if (!(digits[i] == 0 || digits[i] == 1))
+                String currentNum = numStr.substring(i,i+1);
+                if (!(currentNum.equals("0") || currentNum.equals("1")))
                 {
                     return false;
                 }
             }
+            return true;
         }
-        return true;
+        if (base == 8)
+        {
+            for (int i = 0; i < numStr.length(); i++)
+            {
+                String currentNum = numStr.substring(i,i+1);
+                boolean acceptable = false;
+                for (int j = 0;j<8;j++)
+                {
+                    if (currentNum.equals(Integer.toString(j)))
+                    {
+                        acceptable = true;
+                    }
+                }
+                if (!acceptable)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        if (base == 10)
+        {
+            for (int i = 0; i < numStr.length(); i++)
+            {
+                String currentNum = numStr.substring(i,i+1);
+                boolean acceptable = false;
+                for (int j = 0;j<10;j++)
+                {
+                    if (currentNum.equals(Integer.toString(j)))
+                    {
+                        acceptable = true;
+                    }
+                }
+                if (!acceptable)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
     public String displayOriginalNumber() {
         String o = "";
@@ -93,7 +139,6 @@ public class NumberConverter {
             {
                 numStr = "";
                 int oneNum = Integer.parseInt(numAsStr.substring(i,i+1));
-                System.out.println(oneNum);
                 while (oneNum > 0)
                 {
                     remainder = oneNum%2;
@@ -108,7 +153,6 @@ public class NumberConverter {
                 {
                     numStr="0"+numStr;
                 }
-                System.out.println(numStr);
                 ans+=numStr;
             }
             while(ans.substring(0,1).equals("0"))
@@ -193,9 +237,13 @@ public class NumberConverter {
                     counter2 = 0;
                 }
             }
+            ans = temp2 +ans;
             for (int i = 0;i<tempArray.length;i++)
             {
-                tempArray[i]=Integer.parseInt(ans.substring(i,i+1));
+                if (ans.length()>0)
+                {
+                    tempArray[i]=Integer.parseInt(ans.substring(i,i+1));
+                }
             }
             return tempArray;
         }

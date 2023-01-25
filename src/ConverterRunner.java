@@ -11,9 +11,20 @@ class ConverterRunner {
         String choice = s.nextLine();
         int base = Integer.parseInt(choice);
 
-        System.out.print("Enter your number: ");
-        String number = s.nextLine();
-        int n = Integer.parseInt(number);
+        boolean acceptable = false;
+        int n = 0;
+        String number = "";
+        while (!acceptable)
+        {
+            System.out.print("Enter your number: ");
+            number = s.nextLine();
+            acceptable = NumberConverter.numberChecker(base, number);
+            if (!acceptable)
+            {
+                System.out.println("That is not a acceptable number! Try again.");
+            }
+        }
+        n = Integer.parseInt(number);
 
         s.close();
 
