@@ -1,79 +1,83 @@
+import java.util.Arrays;
+
 public class NumberConverter {
-    int[] digits;
+    String[] digits;
     int base;
     int number;
+    String numberStr;
+    String[] hexaArray = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
 
     public NumberConverter(int number, int base) {
         String numberAsString = Integer.toString(number);
-        digits = new int[numberAsString.length()];
+        digits = new String[numberAsString.length()];
         for (int i = 0; i < numberAsString.length(); i++) {
-            String single = numberAsString.substring(i,i+1);
+            String single = numberAsString.substring(i, i + 1);
             int d = Integer.parseInt(single);
-            digits[i] = d;
+            digits[i] = Integer.toString(d);
         }
         this.base = base;
         this.number = number;
     }
-    public static boolean numberChecker(int base, String numStr)
-    {
-        if (numStr.length()>10)
-        {
-                return false;
+
+    public NumberConverter(String numberStr, int base) {
+        digits = new String[numberStr.length()];
+        for (int i = 0; i < numberStr.length(); i++) {
+            String single = numberStr.substring(i, i + 1);
+            digits[i] = single;
         }
-        if (base == 2)
-        {
-            for (int i = 0; i < numStr.length(); i++)
-            {
-                String currentNum = numStr.substring(i,i+1);
-                if (!(currentNum.equals("0") || currentNum.equals("1")))
-                {
+        this.base = base;
+        this.numberStr = numberStr;
+    }
+
+    public static boolean numberChecker(int base, String numStr) {
+        if (numStr.length() > 10) {
+            return false;
+        }
+        if (base == 2) {
+            for (int i = 0; i < numStr.length(); i++) {
+                String currentNum = numStr.substring(i, i + 1);
+                if (!(currentNum.equals("0") || currentNum.equals("1"))) {
                     return false;
                 }
             }
             return true;
         }
-        if (base == 8)
-        {
-            for (int i = 0; i < numStr.length(); i++)
-            {
-                String currentNum = numStr.substring(i,i+1);
+        if (base == 8) {
+            for (int i = 0; i < numStr.length(); i++) {
+                String currentNum = numStr.substring(i, i + 1);
                 boolean acceptable = false;
-                for (int j = 0;j<8;j++)
-                {
-                    if (currentNum.equals(Integer.toString(j)))
-                    {
+                for (int j = 0; j < 8; j++) {
+                    if (currentNum.equals(Integer.toString(j))) {
                         acceptable = true;
                     }
                 }
-                if (!acceptable)
-                {
+                if (!acceptable) {
                     return false;
                 }
             }
             return true;
         }
-        if (base == 10)
-        {
-            for (int i = 0; i < numStr.length(); i++)
-            {
-                String currentNum = numStr.substring(i,i+1);
+        if (base == 10) {
+            for (int i = 0; i < numStr.length(); i++) {
+                String currentNum = numStr.substring(i, i + 1);
                 boolean acceptable = false;
-                for (int j = 0;j<10;j++)
-                {
-                    if (currentNum.equals(Integer.toString(j)))
-                    {
+                for (int j = 0; j < 10; j++) {
+                    if (currentNum.equals(Integer.toString(j))) {
                         acceptable = true;
                     }
                 }
-                if (!acceptable)
-                {
+                if (!acceptable) {
                     return false;
                 }
             }
+            return true;
+        }
+        if (base == 16) {
             return true;
         }
         return false;
     }
+
     public String displayOriginalNumber() {
         String o = "";
         for (int i = 0; i < digits.length; i++) {
@@ -83,7 +87,7 @@ public class NumberConverter {
         return o;
     }
 
-    public int[] getDigits() {
+    public String[] getDigits() {
         return digits;
     }
 
@@ -91,21 +95,136 @@ public class NumberConverter {
         String numStr = Integer.toString(number);
         int tempNum = 0;
         int tempBase = 1;
-        for (int i = numStr.length()-1;i >= 0;i--)
-        {
-            tempNum += Integer.parseInt(numStr.substring(i,i+1))*tempBase;
-            tempBase*= base;
+        for (int i = numStr.length() - 1; i >= 0; i--) {
+            tempNum += Integer.parseInt(numStr.substring(i, i + 1)) * tempBase;
+            tempBase *= base;
         }
         numStr = Integer.toString(tempNum);
         int[] tempArray = new int[numStr.length()];
-        for (int i = 0;i < numStr.length();i++)
-        {
-            tempArray[i] = Integer.parseInt(numStr.substring(i,i+1));
+        for (int i = 0; i < numStr.length(); i++) {
+            tempArray[i] = Integer.parseInt(numStr.substring(i, i + 1));
         }
         return tempArray;
     }
 
-    public int[] convertToBinary()
+    public int[] convertToBinary() {
+        int temp = number;
+        int counter = 0;
+        int remainder = 0;
+        if (base == 10) {
+            while (temp > 0) {
+                remainder = temp % 2;
+                counter++;
+                temp = temp / 2;
+            }
+            int[] tempArray = new int[counter];
+            temp = number;
+            counter--;
+            while (temp > 0) {
+                remainder = temp % 2;
+                tempArray[counter] = remainder;
+                temp = temp / 2;
+                counter--;
+            }
+            return tempArray;
+        }
+        if (base == 8) {
+            String numAsStr = Integer.toString(number);
+            String numStr = "";
+            String ans = "";
+            for (int i = 0; i < numAsStr.length(); i++) {
+                numStr = "";
+                int oneNum = Integer.parseInt(numAsStr.substring(i, i + 1));
+                while (oneNum > 0) {
+                    remainder = oneNum % 2;
+                    numStr = remainder + numStr;
+                    oneNum = oneNum / 2;
+                }
+                if (numStr.length() == 1) {
+                    numStr = "00" + numStr;
+                }
+                if (numStr.length() == 2) {
+                    numStr = "0" + numStr;
+                }
+                ans += numStr;
+            }
+            while (ans.substring(0, 1).equals("0")) {
+                ans = ans.substring(1);
+            }
+            int[] tempArray = new int[ans.length()];
+            for (int i = 0; i < tempArray.length; i++) {
+                tempArray[i] = Integer.parseInt(ans.substring(i, i + 1));
+            }
+            return tempArray;
+        }
+        return null;
+    }
+
+    public int[] convertToOctal() {
+        int temp = number;
+        int counter = 0;
+        int remainder = 0;
+        if (base == 10) {
+            while (temp > 0) {
+                remainder = temp % 8;
+                counter++;
+                temp = temp / 8;
+            }
+            int[] tempArray = new int[counter];
+            temp = number;
+            counter--;
+            while (temp > 0) {
+                remainder = temp % 8;
+                tempArray[counter] = remainder;
+                temp = temp / 8;
+                counter--;
+            }
+            return tempArray;
+        }
+        if (base == 2) {
+            String numString = Integer.toString(number);
+            if (numString.length() % 3 == 0) {
+                counter = numString.length() / 3;
+            } else {
+                counter = numString.length() / 3 + 1;
+            }
+            int[] tempArray = new int[counter];
+            counter = 0;
+            int counter2 = 0;
+            int temp2 = 0;
+            String ans = "";
+            for (int i = numString.length() - 1; i >= 0; i--) {
+                if (counter == 0) {
+                    temp2 += Integer.parseInt(numString.substring(i, i + 1));
+                    counter++;
+                    counter2++;
+                } else if (counter == 1) {
+                    temp2 += Integer.parseInt(numString.substring(i, i + 1)) * 2;
+                    counter++;
+                    counter2++;
+                } else if (counter == 2) {
+                    temp2 += Integer.parseInt(numString.substring(i, i + 1)) * 4;
+                    counter = 0;
+                    counter2++;
+                }
+                if (counter2 == 3) {
+                    ans = temp2 + ans;
+                    temp2 = 0;
+                    counter2 = 0;
+                }
+            }
+            ans = temp2 + ans;
+            for (int i = 0; i < tempArray.length; i++) {
+                if (ans.length() > 0) {
+                    tempArray[i] = Integer.parseInt(ans.substring(i, i + 1));
+                }
+            }
+            return tempArray;
+        }
+        return null;
+    }
+
+    public String[] convertToHex()
     {
         int temp = number;
         int counter = 0;
@@ -114,140 +233,91 @@ public class NumberConverter {
         {
             while (temp > 0)
             {
-                remainder = temp%2;
+                remainder = temp % 16;
                 counter++;
-                temp = temp/2;
+                temp = temp / 16;
             }
-            int[] tempArray = new int[counter];
+            String[] tempArray = new String[counter];
             temp = number;
             counter--;
             while (temp > 0)
             {
-                remainder = temp%2;
-                tempArray[counter] = remainder;
-                temp = temp/2;
+                remainder = temp % 16;
+                tempArray[counter] = hexaArray[remainder];
+                temp = temp / 16;
                 counter--;
             }
             return tempArray;
         }
-        if (base == 8)
-        {
-            String numAsStr = Integer.toString(number);
-            String numStr = "";
-            String ans = "";
-            for (int i =0;i<numAsStr.length();i++)
-            {
-                numStr = "";
-                int oneNum = Integer.parseInt(numAsStr.substring(i,i+1));
-                while (oneNum > 0)
-                {
-                    remainder = oneNum%2;
-                    numStr = remainder+numStr;
-                    oneNum = oneNum/2;
-                }
-                if (numStr.length()==1)
-                {
-                    numStr="00"+numStr;
-                }
-                if (numStr.length()==2)
-                {
-                    numStr="0"+numStr;
-                }
-                ans+=numStr;
-            }
-            while(ans.substring(0,1).equals("0"))
-            {
-                ans = ans.substring(1);
-            }
-            int[] tempArray = new int[ans.length()];
-            for (int i = 0;i<tempArray.length;i++)
-            {
-                tempArray[i]=Integer.parseInt(ans.substring(i,i+1));
-            }
-            return tempArray;
-        }
-        return null;
-    }
-
-    public int[] convertToOctal()
-    {
-        int temp = number;
-        int counter = 0;
-        int remainder = 0;
-        if (base== 10)
-        {
-            while (temp > 0)
-            {
-                remainder = temp%8;
-                counter++;
-                temp = temp/8;
-            }
-            int[] tempArray = new int[counter];
-            temp = number;
-            counter--;
-            while (temp > 0)
-            {
-                remainder = temp%8;
-                tempArray[counter] = remainder;
-                temp = temp/8;
-                counter--;
-            }
-            return tempArray;
-        }
-        if (base== 2)
+        if (base == 2)
         {
             String numString = Integer.toString(number);
-            if (numString.length()%3==0)
+            if (numString.length() % 4 == 0)
             {
-                counter = numString.length()/3;
+                counter = numString.length() / 4;
+            } else {
+                counter = numString.length() / 4 + 1;
             }
-            else
-            {
-                counter = numString.length()/3+1;
-            }
-            int[] tempArray = new int[counter];
+            String[] tempArray = new String[counter];
             counter = 0;
             int counter2 = 0;
+            int counter3 = tempArray.length - 1; //counts the array index to place the hex number
             int temp2 = 0;
-            String ans = "";
-            for (int i = numString.length()-1;i>=0;i--)
-            {
-                if (counter ==0)
-                {
-                    temp2 += Integer.parseInt(numString.substring(i,i+1));
+            for (int i = numString.length() - 1; i >= 0; i--) {
+                if (counter == 0) {
+                    temp2 += Integer.parseInt(numString.substring(i, i + 1));
                     counter++;
                     counter2++;
-                }
-                else if (counter ==1)
-                {
-                    temp2 += Integer.parseInt(numString.substring(i,i+1))*2;
+                } else if (counter == 1) {
+                    temp2 += Integer.parseInt(numString.substring(i, i + 1)) * 2;
                     counter++;
                     counter2++;
-                }
-                else if (counter ==2)
-                {
-                    temp2 += Integer.parseInt(numString.substring(i,i+1))*4;
-                    counter=0;
+                } else if (counter == 2) {
+                    temp2 += Integer.parseInt(numString.substring(i, i + 1)) * 4;
+                    counter++;
+                    counter2++;
+                } else if (counter == 3) {
+                    temp2 += Integer.parseInt(numString.substring(i, i + 1)) * 8;
+                    counter = 0;
                     counter2++;
                 }
-                if (counter2==3)
-                {
-                    ans = temp2 + ans;
-                    temp2 =0;
+                if (counter2 == 4) {
+                    tempArray[counter3] = hexaArray[temp2];
+                    counter3--;
+                    temp2 = 0;
                     counter2 = 0;
                 }
             }
-            ans = temp2 +ans;
-            for (int i = 0;i<tempArray.length;i++)
+            tempArray[counter3] = hexaArray[temp2];
+            return tempArray;
+        }
+        if (base == 8) {
+            int[] decimal = convertToDecimal();
+            String numStr = "";
+            for (int i =0;i<decimal.length;i++)
             {
-                if (ans.length()>0)
-                {
-                    tempArray[i]=Integer.parseInt(ans.substring(i,i+1));
-                }
+                numStr = numStr+decimal[i];
+            }
+            System.out.println(numStr);
+            temp = Integer.parseInt(numStr);
+            counter = 0;
+            remainder = 0;
+            while (temp > 0) {
+                remainder = temp % 16;
+                counter++;
+                temp = temp / 16;
+            }
+            String[] tempArray = new String[counter];
+            temp = Integer.parseInt(numStr);
+            counter--;
+            while (temp > 0) {
+                remainder = temp % 16;
+                tempArray[counter] = hexaArray[remainder];
+                temp = temp / 16;
+                counter--;
             }
             return tempArray;
         }
         return null;
     }
 }
-
