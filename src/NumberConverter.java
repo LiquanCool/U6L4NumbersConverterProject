@@ -5,7 +5,7 @@ public class NumberConverter {
     int base;
     int number;
     String numberStr;
-    String[] hexaArray = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+    static String[] hexaArray = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
 
     public NumberConverter(int number, int base) {
         String numberAsString = Integer.toString(number);
@@ -73,6 +73,18 @@ public class NumberConverter {
             return true;
         }
         if (base == 16) {
+            for (int i = 0; i < numStr.length(); i++) {
+                String currentNum = numStr.substring(i, i + 1);
+                boolean acceptable = false;
+                for (int j = 0; j < hexaArray.length; j++) {
+                    if (currentNum.equals(hexaArray[j])) {
+                        acceptable = true;
+                    }
+                }
+                if (!acceptable) {
+                    return false;
+                }
+            }
             return true;
         }
         return false;
@@ -91,20 +103,42 @@ public class NumberConverter {
         return digits;
     }
 
-    public int[] convertToDecimal() {
-        String numStr = Integer.toString(number);
-        int tempNum = 0;
-        int tempBase = 1;
-        for (int i = numStr.length() - 1; i >= 0; i--) {
-            tempNum += Integer.parseInt(numStr.substring(i, i + 1)) * tempBase;
-            tempBase *= base;
+    public int[] convertToDecimal()
+    {
+        if (base == 16)
+        {
+
+            String numStr = numberStr;
+            int tempNum = 0;
+            int tempBase = 1;
+            for (int i = numStr.length() - 1; i >= 0; i--) {
+                String current = numStr.substring(i, i + 1);
+                tempNum += Arrays.toString(hexaArray).indexOf(current)/3 * tempBase;
+                tempBase *= base;
+            }
+            numStr = Integer.toString(tempNum);
+            int[] tempArray = new int[numStr.length()];
+            for (int i = 0; i < numStr.length(); i++) {
+                tempArray[i] = Integer.parseInt(numStr.substring(i, i + 1));
+            }
+            return tempArray;
         }
-        numStr = Integer.toString(tempNum);
-        int[] tempArray = new int[numStr.length()];
-        for (int i = 0; i < numStr.length(); i++) {
-            tempArray[i] = Integer.parseInt(numStr.substring(i, i + 1));
+        else
+        {
+           String numStr = Integer.toString(number);
+           int tempNum = 0;
+           int tempBase = 1;
+           for (int i = numStr.length() - 1; i >= 0; i--) {
+               tempNum += Integer.parseInt(numStr.substring(i, i + 1)) * tempBase;
+               tempBase *= base;
+           }
+           numStr = Integer.toString(tempNum);
+           int[] tempArray = new int[numStr.length()];
+           for (int i = 0; i < numStr.length(); i++) {
+               tempArray[i] = Integer.parseInt(numStr.substring(i, i + 1));
+            }
+            return tempArray;
         }
-        return tempArray;
     }
 
     public int[] convertToBinary() {
@@ -119,6 +153,46 @@ public class NumberConverter {
             }
             int[] tempArray = new int[counter];
             temp = number;
+            counter--;
+            while (temp > 0) {
+                remainder = temp % 2;
+                tempArray[counter] = remainder;
+                temp = temp / 2;
+                counter--;
+            }
+            return tempArray;
+        }
+        if (base ==16)
+        {
+            String numStr = numberStr;
+            int tempNum = 0;
+            int tempBase = 1;
+            for (int i = numStr.length() - 1; i >= 0; i--) {
+                String current = numStr.substring(i, i + 1);
+                tempNum += Arrays.toString(hexaArray).indexOf(current)/3 * tempBase;
+                tempBase *= base;
+            }
+            numStr = Integer.toString(tempNum);
+            int[] tempArrayStr = new int[numStr.length()];
+            for (int i = 0; i < numStr.length(); i++) {
+                tempArrayStr[i] = Integer.parseInt(numStr.substring(i, i + 1));
+            }
+            String newNumStr = "";
+            for (int i = 0;i<tempArrayStr.length;i++)
+            {
+                newNumStr = newNumStr + tempArrayStr[i];
+            }
+            int newNum = Integer.parseInt(newNumStr);
+            temp = newNum;
+            counter = 0;
+            remainder = 0;
+            while (temp > 0) {
+                remainder = temp % 2;
+                counter++;
+                temp = temp / 2;
+            }
+            int[] tempArray = new int[counter];
+            temp = newNum;
             counter--;
             while (temp > 0) {
                 remainder = temp % 2;
@@ -172,6 +246,46 @@ public class NumberConverter {
             }
             int[] tempArray = new int[counter];
             temp = number;
+            counter--;
+            while (temp > 0) {
+                remainder = temp % 8;
+                tempArray[counter] = remainder;
+                temp = temp / 8;
+                counter--;
+            }
+            return tempArray;
+        }
+        if (base ==16)
+        {
+            String numStr = numberStr;
+            int tempNum = 0;
+            int tempBase = 1;
+            for (int i = numStr.length() - 1; i >= 0; i--) {
+                String current = numStr.substring(i, i + 1);
+                tempNum += Arrays.toString(hexaArray).indexOf(current)/3 * tempBase;
+                tempBase *= base;
+            }
+            numStr = Integer.toString(tempNum);
+            int[] tempArrayStr = new int[numStr.length()];
+            for (int i = 0; i < numStr.length(); i++) {
+                tempArrayStr[i] = Integer.parseInt(numStr.substring(i, i + 1));
+            }
+            String newNumStr = "";
+            for (int i = 0;i<tempArrayStr.length;i++)
+            {
+                newNumStr = newNumStr + tempArrayStr[i];
+            }
+            int newNum = Integer.parseInt(newNumStr);
+            temp = newNum;
+            counter = 0;
+            remainder = 0;
+            while (temp > 0) {
+                remainder = temp % 8;
+                counter++;
+                temp = temp / 8;
+            }
+            int[] tempArray = new int[counter];
+            temp = newNum;
             counter--;
             while (temp > 0) {
                 remainder = temp % 8;
@@ -288,7 +402,10 @@ public class NumberConverter {
                     counter2 = 0;
                 }
             }
-            tempArray[counter3] = hexaArray[temp2];
+            if (!(counter3 ==-1))
+            {
+                tempArray[counter3] = hexaArray[temp2];
+            }
             return tempArray;
         }
         if (base == 8) {
@@ -298,7 +415,6 @@ public class NumberConverter {
             {
                 numStr = numStr+decimal[i];
             }
-            System.out.println(numStr);
             temp = Integer.parseInt(numStr);
             counter = 0;
             remainder = 0;

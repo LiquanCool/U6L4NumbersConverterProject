@@ -13,6 +13,7 @@ class ConverterRunner {
 
         boolean acceptable = false;
         int n = 0;
+        String m = "";
         String number = "";
         while (!acceptable)
         {
@@ -26,33 +27,44 @@ class ConverterRunner {
                 base = Integer.parseInt(s.nextLine());
             }
         }
-        n = Integer.parseInt(number);
-
-        s.close();
-
-
-        NumberConverter nc = new NumberConverter(n, base);
-        String[] digits = nc.getDigits();
-        System.out.println("\n\nDigit array: " + Arrays.toString(digits));
-        System.out.println("Number: " + nc.displayOriginalNumber());
-        if (base == 2)
+        if (base == 16)
         {
-            System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
-            System.out.println("Decimal Number: " + Arrays.toString(nc.convertToDecimal()));
-            System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
-        }
-        if (base == 8)
-        {
-            System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
-            System.out.println("Decimal Number: " + Arrays.toString(nc.convertToDecimal()));
-            System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
-        }
-        if (base == 10)
-        {
+            m = number;
+            s.close();
+            NumberConverter nc = new NumberConverter(m, base);
+            String[] digits = nc.getDigits();
+            System.out.println("\n\nDigit array: " + Arrays.toString(digits));
+            System.out.println("Number: " + nc.displayOriginalNumber());
             System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
             System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
-            System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
+            System.out.println("Decimal Number: " + Arrays.toString(nc.convertToDecimal()));
         }
+        else
+        {
+            n = Integer.parseInt(number);
+            s.close();
+            NumberConverter nc = new NumberConverter(n, base);
+            if (base == 2)
+            {
+                System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
+                System.out.println("Decimal Number: " + Arrays.toString(nc.convertToDecimal()));
+                System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
+            }
+            if (base == 8)
+            {
+                System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
+                System.out.println("Decimal Number: " + Arrays.toString(nc.convertToDecimal()));
+                System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
+            }
+            if (base == 10)
+            {
+                System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
+                System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
+                System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
+            }
+        }
+
+
     }
 }
 
