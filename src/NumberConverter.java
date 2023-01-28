@@ -6,7 +6,7 @@ public class NumberConverter {
     int number;
     String numberStr;
     static String[] hexaArray = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
-
+    static String[] minecraftBaseArray = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "+", "/"};
     public NumberConverter(int number, int base) {
         String numberAsString = Integer.toString(number);
         digits = new String[numberAsString.length()];
@@ -436,4 +436,28 @@ public class NumberConverter {
         }
         return null;
     }
+    public String[] convertToMC(int targetBase)
+    {
+        int temp = number;
+        int counter = 0;
+        int remainder = 0;
+        while (temp > 0)
+        {
+            remainder = temp % targetBase;
+            counter++;
+            temp = temp / targetBase;
+        }
+        String[] tempArray = new String[counter];
+        temp = number;
+        counter--;
+        while (temp > 0)
+        {
+            remainder = temp % targetBase;
+            tempArray[counter] = minecraftBaseArray[remainder];
+            temp = temp / targetBase;
+            counter--;
+        }
+        return tempArray;
+    }
+
 }

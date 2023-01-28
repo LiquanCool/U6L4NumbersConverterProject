@@ -42,7 +42,6 @@ class ConverterRunner {
         else
         {
             n = Integer.parseInt(number);
-            s.close();
             NumberConverter nc = new NumberConverter(n, base);
             if (base == 2)
             {
@@ -58,9 +57,21 @@ class ConverterRunner {
             }
             if (base == 10)
             {
-                System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
-                System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
-                System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
+                System.out.print("To convert to a specific base (1-64), enter i\nTo convert normally enter n or anything else:");
+                String ans = s.nextLine();
+                if (ans.equals("i"))
+                {
+                    //add check here with 64 base
+                    System.out.print("What base do you want to convert to:");
+                    ans = s.nextLine();
+                    System.out.println("Converted Number: " + Arrays.toString(nc.convertToMC(Integer.parseInt(ans))));
+                }
+                else
+                {
+                    System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
+                    System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
+                    System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
+                }
             }
         }
 
