@@ -29,11 +29,11 @@ public class NumberConverter {
         this.numberStr = numberStr;
     }
 
-    public static boolean numberChecker(int base, String numStr) {
+    public static boolean numberChecker(String base, String numStr) {
         if (numStr.length() > 10) {
             return false;
         }
-        if (base == 2) {
+        if (base.equals("2")) {
             for (int i = 0; i < numStr.length(); i++) {
                 String currentNum = numStr.substring(i, i + 1);
                 if (!(currentNum.equals("0") || currentNum.equals("1"))) {
@@ -42,7 +42,7 @@ public class NumberConverter {
             }
             return true;
         }
-        if (base == 8) {
+        if (base.equals("8")) {
             for (int i = 0; i < numStr.length(); i++) {
                 String currentNum = numStr.substring(i, i + 1);
                 boolean acceptable = false;
@@ -57,7 +57,7 @@ public class NumberConverter {
             }
             return true;
         }
-        if (base == 10) {
+        if (base.equals("10")) {
             for (int i = 0; i < numStr.length(); i++) {
                 String currentNum = numStr.substring(i, i + 1);
                 boolean acceptable = false;
@@ -72,7 +72,7 @@ public class NumberConverter {
             }
             return true;
         }
-        if (base == 16) {
+        if (base.equals("16")) {
             for (int i = 0; i < numStr.length(); i++) {
                 String currentNum = numStr.substring(i, i + 1);
                 boolean acceptable = false;
@@ -89,6 +89,19 @@ public class NumberConverter {
         }
         return false;
     }
+    public static boolean mcChecker(String base)
+    {
+        for (int k = 1;k<=64;k++)
+        {
+            if (base.equals(Integer.toString(k)))
+            {
+
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public String displayOriginalNumber() {
         String o = "";
@@ -327,7 +340,9 @@ public class NumberConverter {
                     counter2 = 0;
                 }
             }
-            ans = temp2 + ans;
+            if(!(numString.length()%3==0)){
+                ans = temp2 + ans;
+            }
             for (int i = 0; i < tempArray.length; i++) {
                 if (ans.length() > 0) {
                     tempArray[i] = Integer.parseInt(ans.substring(i, i + 1));
