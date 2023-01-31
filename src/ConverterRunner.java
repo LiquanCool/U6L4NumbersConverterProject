@@ -57,7 +57,7 @@ class ConverterRunner {
             }
             if (base.equals("10"))
             {
-                System.out.print("To convert to a specific base (1-64), enter i\nTo convert normally enter n or anything else:");
+                System.out.print("To convert to a specific base, enter i\nTo convert normally enter n or anything else:");
                 String ans = s.nextLine();
                 if (ans.equals("i"))
                 {
