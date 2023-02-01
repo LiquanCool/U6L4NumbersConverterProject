@@ -460,6 +460,15 @@ public class NumberConverter {
     }
     public String[] convertToMC(int targetBase)
     {
+        if (targetBase==1)
+        {
+            String[] tempArray = new String[number];
+            for (int i = 0;i < number;i++)
+            {
+                tempArray[i] = "1";
+            }
+            return tempArray;
+        }
         int temp = number;
         int counter = 0;
         int remainder = 0;
