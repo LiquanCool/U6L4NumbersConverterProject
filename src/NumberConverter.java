@@ -216,31 +216,38 @@ public class NumberConverter {
             return tempArray;
         }
         if (base == 8) {
-            String numAsStr = Integer.toString(number);
-            String numStr = "";
-            String ans = "";
-            for (int i = 0; i < numAsStr.length(); i++) {
-                numStr = "";
-                int oneNum = Integer.parseInt(numAsStr.substring(i, i + 1));
-                while (oneNum > 0) {
-                    remainder = oneNum % 2;
-                    numStr = remainder + numStr;
-                    oneNum = oneNum / 2;
-                }
-                if (numStr.length() == 1) {
-                    numStr = "00" + numStr;
-                }
-                if (numStr.length() == 2) {
-                    numStr = "0" + numStr;
-                }
-                ans += numStr;
+            String numStr = Integer.toString(number);
+            int tempNum = 0;
+            int tempBase = 1;
+            for (int i = numStr.length() - 1; i >= 0; i--) {
+                tempNum += Integer.parseInt(numStr.substring(i, i + 1)) * tempBase;
+                tempBase *= base;
             }
-            while (ans.substring(0, 1).equals("0")) {
-                ans = ans.substring(1);
+            numStr = Integer.toString(tempNum);
+            int[] decArray = new int[numStr.length()];
+            for (int i = 0; i < numStr.length(); i++) {
+                decArray[i] = Integer.parseInt(numStr.substring(i, i + 1));
             }
-            int[] tempArray = new int[ans.length()];
-            for (int i = 0; i < tempArray.length; i++) {
-                tempArray[i] = Integer.parseInt(ans.substring(i, i + 1));
+            String decNum = "";
+            for (int i = 0; i < decArray.length; i++) {
+                decNum = decNum + decArray[i];
+            }
+            temp = Integer.parseInt(decNum);
+            while (temp > 0)
+            {
+                remainder = temp % 2;
+                counter++;
+                temp = temp / 2;
+            }
+            int[] tempArray = new int[counter];
+            temp = Integer.parseInt(decNum);
+            counter--;
+            while (temp > 0)
+            {
+                remainder = temp % 2;
+                tempArray[counter] = remainder;
+                temp = temp / 2;
+                counter--;
             }
             return tempArray;
         }
