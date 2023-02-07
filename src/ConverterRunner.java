@@ -33,11 +33,11 @@ class ConverterRunner {
             s.close();
             NumberConverter nc = new NumberConverter(m, Integer.parseInt(base));
             String[] digits = nc.getDigits();
-            System.out.println("\n\nDigit array: " + Arrays.toString(digits));
+            System.out.println("\n\nDigit array: " + NumberConverter.stringConverter(digits));
             System.out.println("Number: " + nc.displayOriginalNumber());
-            System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
-            System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
-            System.out.println("Decimal Number: " + Arrays.toString(nc.convertToDecimal()));
+            System.out.println("Binary Number: " + NumberConverter.stringConverter(nc.convertToBinary()));
+            System.out.println("Octal Number: " + NumberConverter.stringConverter(nc.convertToOctal()));
+            System.out.println("Decimal Number: " + NumberConverter.stringConverter(nc.convertToDecimal()));
         }
         else
         {
@@ -45,15 +45,15 @@ class ConverterRunner {
             NumberConverter nc = new NumberConverter(n, Integer.parseInt(base));
             if (base.equals("2"))
             {
-                System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
-                System.out.println("Decimal Number: " + Arrays.toString(nc.convertToDecimal()));
-                System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
+                System.out.println("Octal Number: " + NumberConverter.stringConverter(nc.convertToOctal()));
+                System.out.println("Decimal Number: " + NumberConverter.stringConverter(nc.convertToDecimal()));
+                System.out.println("Hexadecimal Number: " + NumberConverter.stringConverter(nc.convertToHex()));
             }
             if (base.equals("8"))
             {
-                System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
-                System.out.println("Decimal Number: " + Arrays.toString(nc.convertToDecimal()));
-                System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
+                System.out.println("Binary Number: " + NumberConverter.stringConverter(nc.convertToBinary()));
+                System.out.println("Decimal Number: " + NumberConverter.stringConverter(nc.convertToDecimal()));
+                System.out.println("Hexadecimal Number: " + NumberConverter.stringConverter(nc.convertToHex()));
             }
             if (base.equals("10"))
             {
@@ -74,13 +74,13 @@ class ConverterRunner {
                             base = s.nextLine();
                         }
                     }
-                    System.out.println("Converted Number: " + Arrays.toString(nc.convertToMC(Integer.parseInt(base))));
+                    System.out.println("Converted Number: " + NumberConverter.stringConverter(nc.convertToMC(Integer.parseInt(base))));
                 }
                 else
                 {
-                    System.out.println("Binary Number: " + Arrays.toString(nc.convertToBinary()));
-                    System.out.println("Octal Number: " + Arrays.toString(nc.convertToOctal()));
-                    System.out.println("Hexadecimal Number: " + Arrays.toString(nc.convertToHex()));
+                    System.out.println("Binary Number: " + NumberConverter.stringConverter(nc.convertToBinary()));
+                    System.out.println("Octal Number: " + NumberConverter.stringConverter(nc.convertToOctal()));
+                    System.out.println("Hexadecimal Number: " + NumberConverter.stringConverter(nc.convertToHex()));
                 }
             }
         }

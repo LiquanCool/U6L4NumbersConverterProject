@@ -18,7 +18,6 @@ public class NumberConverter {
         this.base = base;
         this.number = number;
     }
-
     public NumberConverter(String numberStr, int base) {
         digits = new String[numberStr.length()];
         for (int i = 0; i < numberStr.length(); i++) {
@@ -28,7 +27,24 @@ public class NumberConverter {
         this.base = base;
         this.numberStr = numberStr;
     }
-
+    public static String stringConverter(String[] in)
+    {
+        String out = "";
+        for (int i=0;i<in.length;i++)
+        {
+            out = out+in[i];
+        }
+        return out;
+    }
+    public static String stringConverter(int[] in)
+    {
+        String out = "";
+        for (int i=0;i<in.length;i++)
+        {
+            out = out+in[i];
+        }
+        return out;
+    }
     public static boolean numberChecker(String base, String numStr) {
         if (numStr.length() > 10) {
             return false;
